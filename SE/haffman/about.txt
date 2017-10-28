@@ -1,3 +1,0 @@
-Made to demonstrate the work of Huffman data compression algorithm.
-Tries hard to visualise every step, therefore is totaly not efficient
-{Not finished yet}
