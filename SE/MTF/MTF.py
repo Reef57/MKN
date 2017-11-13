@@ -9,6 +9,29 @@ def usage():
 	print("\tencode - performs MTF transform\n")
 	print("\tdecode - reverses MTF transform\n")
 
+def readFile(filename):
+
+	first = True
+	comp = []
+	dictionary = []
+	with open(filename) as f:
+		while True:
+			c = f.read(1)
+
+			#EOF
+			if not c:
+				break
+			if c == ' ':
+				first = False
+			if first:
+				if c.isdigit():
+					comp.append(int(c))
+			if not first:
+				if c.isalpha():
+					dictionary.append(c)
+
+	return comp, dictionary
+
 def MTF(data):
 	dictionary = sorted(list(set(data)))
 	mod_data = list()
@@ -26,15 +49,13 @@ def MTF(data):
 
 	return [mod_data,dictionary]
 
-def dMTF(compresseddata):
-    compressedtext = compresseddata[0]
-    dictionary = list(compresseddata[1])
+def dMTF(comp, dictionary):
+    compressedtext = comp
+    dictionary = list(dictionary)
 
     plaintext = ""
     rank = 0
     for i in compressedtext:
-    	print(i)
-    	print("\n")
     	rank = int(i)
     	plaintext = plaintext + str(dictionary[rank])
 
@@ -51,20 +72,26 @@ def main():
 		mode = sys.argv[1]
 		file = sys.argv[2]
 
-		with open(file, 'r') as f:
-			data = f.read()
-
 		if mode == "encode":
+			with open(file, 'r') as f:
+				data = f.read()
 			newdata = MTF(data)
 			newfile = sys.argv[2] + ".mtf"
 			with open(newfile, 'w') as f:
-				f.write(str(newdata))
+				for i in newdata:
+					for j in i:
+						f.write(str(j))
+					f.write(" ")
 
 		elif mode == "decode":
-			newdata = dMTF(data)
+			comp,dictionary = readFile(sys.argv[2])
+			newdata = dMTF(comp, dictionary)
 			newfile = sys.argv[2].replace(".mtf", "")
 			with open(newfile, 'w') as f:
 				f.write(newdata)
+
+		#comp, dictionary = readFile(newfile)
+		#print(str(comp) + '\n' + str(dictionary) + '\n')
 
 if __name__ == "__main__":
 	main()
