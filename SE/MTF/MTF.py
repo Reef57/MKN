@@ -1,4 +1,3 @@
-#TODO: fix dMTF
 import sys
 import os
 
@@ -45,8 +44,6 @@ def MTF(data):
 
 	dictionary.sort()
 
-	#print(dictionary)
-
 	return [mod_data,dictionary]
 
 def dMTF(comp, dictionary):
@@ -89,9 +86,6 @@ def main():
 			newfile = sys.argv[2].replace(".mtf", "")
 			with open(newfile, 'w') as f:
 				f.write(newdata)
-
-		#comp, dictionary = readFile(newfile)
-		#print(str(comp) + '\n' + str(dictionary) + '\n')
 
 if __name__ == "__main__":
 	main()
