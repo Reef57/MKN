@@ -1,4 +1,5 @@
 #include <iostream>
+#include <map>
 
 struct Node {
 	int data;
@@ -22,6 +23,9 @@ public:
 	int FindMin();
 	int FindMax();
 	void delNodeWith(int el);
+	void delNodesWith(int el);
+	void updateNode(int el, int newEl);
+	int uniqueCount();
 }
 
 List::List() {
@@ -174,11 +178,72 @@ void List::delNodeWith(int el) {
 
 		while(tmpNode) {
 			if(tmpNode->data == el) {
+				if (head == tmpNode) {
+					head = NULL;
+				}
+				if (tail == tmpNode) {
+					tail = prevNode;
+				}
 				prevNode->next = tmpNode->next;
 				delete tmpNode;
 				break;
 			}
+			prevNode = tmpNode;
+			tmpNode = tmpNode->next;
 
 		}
 	}
+}
+
+void List::delNodesWith(int el) {
+	Node* tmpNode = head;
+	Node* prevNode = NULL;
+
+	while(tmpNode) {
+		if (tmpNode->data == el) {
+			if (tmpNode == head) {
+				head = head->next;
+			}
+			if (tmpNode == tail) {
+				tail = prevNode;
+			}
+			delete tmpNode;
+		}
+		prevNode = tmpNode;
+		tmpNode = tmpNode->next;
+	}
+}
+
+void List::updateNode(int el, int newEl) {
+	Node* tmpNode = head;
+
+	while (tmpNode) {
+		if (tmpNode->data = el) {
+			tmpNode->data = newEl;
+		}
+		tmpNode = tmpNode->next;
+	}
+}
+
+int List::uniqueCount() {
+	Node* tmpNode = head;
+	std::map<int, int> unique;
+	std::map<int, int>::iterator it;
+
+	while (tmpNode) {
+		it = unique.find(tmpNode->data);
+		if (it != unique.end()) {
+			unique[tmpNode->data]++;
+		}
+		else {
+			unique[tmpNode->data] = 1;
+		}
+	}
+
+	return (int)unique.size();
+}
+
+int main() {
+	List list;
+	return 0;
 }
