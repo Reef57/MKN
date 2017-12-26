@@ -286,7 +286,7 @@ void printOptions() {
 	std::cout << "7.delFirst()\n8.delLast()\n9.searchEl()\n";
 	std::cout << "10.findMin()\n11.findMax()\n12.delNodeWith()\n";
 	std::cout << "13.delNodesWith()\n14.updateNode()\n15.uniqueCount()\n";
-	std::cout << "16.printHead()\n17.printTail()\n"
+	std::cout << "16.printHead()\n17.printTail()\n";
 	std::cout << "18 -> EXIT\n\n";
 }
 
@@ -375,7 +375,7 @@ void interactiveTest() {
 		}
 
 		printOptions();
-		cin >> foo;
+		std::cin >> foo;
 	}
 }
 
