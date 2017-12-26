@@ -4,7 +4,7 @@
 struct Node {
 	int data;
 	Node* next;
-}
+};
 
 class List {
 private:
@@ -20,13 +20,16 @@ public:
 	void delFirst();
 	void delLast();
 	int searchEl(int el);
-	int FindMin();
-	int FindMax();
+	int findMin();
+	int findMax();
 	void delNodeWith(int el);
 	void delNodesWith(int el);
 	void updateNode(int el, int newEl);
 	int uniqueCount();
-}
+
+	void printHead();
+	void printTail();
+};
 
 List::List() {
 	head = NULL;
@@ -94,7 +97,7 @@ int List::countNodes() {
 }
 
 bool List::isEmpty() {
-	return head;
+	return !head;
 }
 
 void List::delFirst() {
@@ -111,15 +114,16 @@ void List::delLast() {
 		Node* prevNode;
 
 		while(tmpNode) {
-			prevNode = tmpNode;
 			if(!tmpNode->next) {
 				delete tmpNode;
+				break;
 			}
+			prevNode = tmpNode;
 			tmpNode = tmpNode->next;
 		}
 
 		tail = prevNode;
-		prevNode = NULL;
+		prevNode->next = NULL;
 	}
 }
 
@@ -238,12 +242,146 @@ int List::uniqueCount() {
 		else {
 			unique[tmpNode->data] = 1;
 		}
+		tmpNode = tmpNode->next;
 	}
 
 	return (int)unique.size();
 }
 
+void List::printHead() {
+	std::cout << "HEAD data: " << head->data << std::endl;
+	std::cout << "HEAD next: " << head->next << std::endl;
+}
+
+void List::printTail() {
+	std::cout << "TAIL data: " << tail->data << std::endl;
+	std::cout << "TAIL next: " << tail->next << std::endl;
+}
+/*
+	void addToFront(int el);
+	void addToBack(int el);
+	void printNodes();
+	void delNodes();
+	int countNodes();
+	bool isEmpty();
+	void delFirst();
+	void delLast();
+	int searchEl(int el);
+	int findMin();
+	int findMax();
+	void delNodeWith(int el);
+	void delNodesWith(int el);
+	void updateNode(int el, int newEl);
+	int uniqueCount();
+
+	void printHead();
+	void printTail();
+*/
+
+List list;
+
+void printOptions() {
+	std::cout << "1.addToFront()\n2.addToBack()\n3.printNodes()\n";
+	std::cout << "4.delNodes()\n5.countNodes()\n6.isEmpty()\n";
+	std::cout << "7.delFirst()\n8.delLast()\n9.searchEl()\n";
+	std::cout << "10.findMin()\n11.findMax()\n12.delNodeWith()\n";
+	std::cout << "13.delNodesWith()\n14.updateNode()\n15.uniqueCount()\n";
+	std::cout << "16.printHead()\n17.printTail()\n"
+	std::cout << "18 -> EXIT\n\n";
+}
+
+void interactiveTest() {
+	int foo, bar, kar;
+
+	printOptions();
+	std::cin >> foo;
+
+	while(foo != 18) {
+		switch(foo) {
+			case 1:
+				std::cin >> bar;
+				list.addToFront(bar);
+			break;
+
+			case 2:
+				std::cin >> bar;
+				list.addToFront(bar);
+			break;
+
+			case 3:
+				list.printNodes();
+			break;
+
+			case 4:
+				list.delNodes();
+			break;
+
+			case 5:
+				std::cout << "countNodes returned: " << list.countNodes() << std::endl;
+			break;
+
+			case 6:
+				std::cout << "isEmpty returned: " << list.isEmpty() << std::endl;
+			break;
+
+			case 7:
+				list.delFirst();
+			break;
+
+			case 8:
+				list.delLast();
+			break;
+
+			case 9:
+				std::cin >> bar;
+				std::cout << "searchEl returned: " << list.searchEl(bar) << std::endl;
+			break;
+
+			case 10:
+				std::cout << "findMin returned: " << list.findMin() << std::endl;
+			break;
+
+			case 11:
+				std::cout << "findMax returned: " << list.findMax() << std::endl;
+			break;
+
+			case 12:
+				std::cin >> bar;
+				list.delNodeWith(bar);
+			break;
+
+			case 13:
+				std::cin >> bar;
+				list.delNodesWith(bar);
+			break;
+
+			case 14:
+				std::cin >> bar;
+				std::cin >> kar;
+				list.updateNode(bar, kar);
+			break;
+
+			case 15:
+				std::cout << "uniqueCount returned: " << list.uniqueCount() << std::endl;
+			break;
+
+			case 16:
+				list.printHead();
+			break;
+
+			case 17:
+				list.printTail();
+			break;
+		}
+
+		printOptions();
+		cin >> foo;
+	}
+}
+
 int main() {
-	List list;
+
+	interactiveTest();
+
 	return 0;
 }
