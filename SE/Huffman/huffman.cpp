@@ -18,7 +18,7 @@ typedef map<char,int>::const_iterator MAP_ITER;
 typedef vector<pair<char,int>> VECTOR;
 
 class compare {
-public: 
+public:
   bool operator()(pair<int,char> n1, pair<int,char> n2) {
     return n1.second > n2.second;
   }
@@ -28,7 +28,7 @@ class btNode {
 public:
   btNode();
   btNode* left;
-  btNode* right; 
+  btNode* right;
 
   string* sequence;
   int val;
@@ -79,7 +79,7 @@ btNode* construct_tree(VECTOR vec) {
 
   	if(centralNode->val < node->val) {
   		finalNode->left = centralNode;
-  		finalNode->right = node; 
+  		finalNode->right = node;
   	} else {
   		finalNode->left = node;
   		finalNode->right = centralNode;
@@ -233,14 +233,13 @@ int main() {
   auto head = construct_tree(vec);
   print_tree(head);
 
-  char kek = 'o';
   cout << "head->sequence[0][0] = " << head->sequence[0][0] << endl;
 
   string encoded = "";
   for(int i = 0; i < fsize + 1; i++) {
   	if(isalpha(buffer[i])) {
   		int tmp = search_tree(buffer[i], head);
-  		string stmp = to_string(tmp); 
+  		string stmp = to_string(tmp);
   		answer = "";
   		encoded += stmp;
   	}
