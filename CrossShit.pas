@@ -18,7 +18,8 @@ begin
      if skal(b.x, b.y, b.x1, b.y1, a.x1, a.y1)*skal(b.x, b.y, b.x1, b.y1, a.x, a.y) < 0 then inc(i);
      if (skal(a.x, a.y, a.x1, a.y1, b.x, b.y) = 0) and (((a.x-b.x)*(a.x1-b.x)+(a.y-b.y)*(a.y1-b.y)) <= 0) then i := 2;
      if (skal(a.x, a.y, a.x1, a.y1, b.x1, b.y1) = 0) and (((a.x-b.x1)*(a.x1-b.x1)+(a.y-b.y1)*(a.y1-b.y1)) <= 0) then i := 2;
-
+     if (skal(b.x, b.y, b.x1, b.y1, a.x1, a.y1) = 0) and (((b.x-a.x1)*(b.x1-a.x1)+(b.y-a.y1)*(b.y1-a.y1)) <= 0) then i := 2;
+     if (skal(b.x, b.y, b.x1, b.y1, a.x, a.y) = 0) and (((b.x-a.x)*(b.x1-a.x)+(b.y-a.y)*(b.y1-a.y)) <= 0) then i := 2;
      if i = 2 then result := true else result := false;
 end;
 
@@ -36,7 +37,7 @@ begin
       read(v[i].y);
       read(v[i].x1);
       read(v[i].y1);
-      if v[i].x*v[i].y > v[i].x1*v[i].x then
+      if v[i].x*v[i].y > v[i].x1*v[i].y1 then
       begin
         xt := v[i].x;
         yt := v[i].y;
