@@ -1,14 +1,9 @@
 #include <fstream>
 #include <iostream>
-#include <string>
-#include <stdio.h>
-#include <cstring>
 
 int main(int argc, char* argv[]) {
-	
     std::ifstream file(argv[1], std::ios_base::in | std::ios_base::binary);
-    strcat(argv[1], ".lre");	
-    std::ofstream LREfile(argv[1]);
+    std::ofstream LREfile("compressed_file", std::ios_base::binary);
 
     char a;
     char a1[128];
@@ -17,24 +12,32 @@ int main(int argc, char* argv[]) {
     bool s = 1;
     a1[0] = file.peek();
 
-    while(!file.eof()){
-        file>>a;
-		//LREfile.put(a);
-		//cot++;
-		
-        if(cot == 126){
+	long nFileLen = 0;
+	if (file)
+	{
+	   file.seekg(0, std::ios_base::end);
+	   nFileLen = file.tellg();
+	   file.seekg(0, std::ios_base::beg);
+	}
+	
+	
+	for(int i = 0; i < nFileLen; i++){
+        file.get(a);
+        if(cot == 120){
             if(s == 0) {
-                
-                LREfile << static_cast<char>(cot);
-                for (int i = 0; i < 126; i++) {
+                LREfile << static_cast<char>(cot-2-127);
+                for (int i = 0; i < 118; i++) {
                     LREfile << a1[i];
                 }
-                cot = 1;
-            }
-            else{
-                LREfile << 125 <<a1[0];
+				a1[0] = a1[118];
+				a1[1] = a1[119];
                 cot = 2;
             }
+            else{
+                LREfile << static_cast<char>(118) <<a1[0];
+                cot = 2;
+            }
+			
         }
 		
         if(s == 1){if(a == file.peek()){cot++;}
@@ -50,9 +53,10 @@ int main(int argc, char* argv[]) {
             }
             else{
                 if(cot != 0) {
+					//LREfile << (cot);
                     cot -= 127;
                     LREfile << static_cast<char>(cot);
-                    for (int i = 0; i < cot + 127; i++) { LREfile << a1[i]; }
+                    for (int i = 0; i < cot + 127; i++) {LREfile << a1[i];}
                 }
                 cot = 2;
                 a1[0] = a;
@@ -61,11 +65,9 @@ int main(int argc, char* argv[]) {
         }
 
     }
-	
-	LREfile << cot;
 
     if(s == 0){if(cot != 0) {
-            //cot -= 127;
+            cot -= 127;
             LREfile << static_cast<char>(cot);
             for (int i = 0; i < cot + 127; i++) { LREfile << a1[i]; }
 	}}

@@ -3,17 +3,28 @@
 
 int main(int argc, char* argv[]) {
     std::ifstream file(argv[1], std::ios_base::in | std::ios_base::binary);
-    std::ofstream LREfile("output.txt");
+    std::ofstream LREfile("output", std::ios_base::binary);
 
     char a, cot;
-    int icot;
-
-    while(file.peek() != EOF){
+    int icot, k;	
+	long nFileLen = 0;
+	k = 0;
+	
+	if (file)
+	{
+	   file.seekg(0, std::ios_base::end);
+	   nFileLen = file.tellg();
+	   file.seekg(0, std::ios_base::beg);
+	}
+	
+	
+	while(k < nFileLen){
         file.get(cot);
         icot = static_cast<int>(cot);
         file.get(a);
+		k += 2;
         if(icot > 0){
-            for(int i = 0; i < icot; i ++){
+            for(int i = 0; i < icot; i++){
                 LREfile << a;
             }
         }
@@ -23,6 +34,7 @@ int main(int argc, char* argv[]) {
             for(int i = 1; i < icot; i++){
                 file.get(a);
                 LREfile << a;
+				k++;
             }
         }
     }
